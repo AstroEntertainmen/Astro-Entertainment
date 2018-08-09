@@ -18,6 +18,13 @@ class CfgSpawnPoints {
               icon = "\a3\ui_f\data\map\MapControl\watertower_ca.paa";
               conditions = "";
           };
+
+          class Chapoi {
+              displayName = "Chapoi";
+              spawnMarker = "civ_spawn_chapoi";
+              icon = "\a3\ui_f\data\map\MapControl\watertower_ca.paa";
+              conditions = "";
+          };
       };
 
       class Cop {
@@ -27,12 +34,26 @@ class CfgSpawnPoints {
               icon = "\a3\ui_f\data\map\MapControl\watertower_ca.paa";
               conditions = "";
           };
+
+          class Chapoi {
+              displayName = "Chapoi HQ";
+              spawnMarker = "cop_spawn_4";
+              icon = "\a3\ui_f\data\map\MapControl\watertower_ca.paa";
+              conditions = "";
+          };
       };
 
       class Medic {
           class Leport {
               displayName = "Le Port Hospital";
               spawnMarker = "medic_spawn_1";
+              icon = "\a3\ui_f\data\map\MapControl\hospital_ca.paa";
+              conditions = "";
+          };
+
+          class Chapoi {
+              displayName = "Chapoi Hospital";
+              spawnMarker = "medic_spawn_4";
               icon = "\a3\ui_f\data\map\MapControl\hospital_ca.paa";
               conditions = "";
           };

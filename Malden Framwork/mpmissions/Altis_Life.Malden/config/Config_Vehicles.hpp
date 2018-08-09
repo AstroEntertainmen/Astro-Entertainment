@@ -108,7 +108,16 @@ class CarShops {
 
     class med_air_hs {
         side = "med";
-        conditions = "";
+        conditions = "call life_mediclevel >= 3";
+        vehicles[] = {
+            { "B_Heli_Light_01_F", "" },
+            { "O_Heli_Light_02_unarmed_F", "" }
+        };
+    };
+
+    class med_air_shop {
+        side = "med";
+        conditions = "call life_mediclevel >= 3";
         vehicles[] = {
             { "B_Heli_Light_01_F", "" },
             { "O_Heli_Light_02_unarmed_F", "" }
