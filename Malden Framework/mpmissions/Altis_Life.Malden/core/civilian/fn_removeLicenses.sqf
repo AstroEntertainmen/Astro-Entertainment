@@ -9,6 +9,8 @@
 private "_state";
 _state = param [0,1,[0]];
 
+if (true) exitWith {};
+
 switch (_state) do {
     //Death while being wanted
     case 0: {

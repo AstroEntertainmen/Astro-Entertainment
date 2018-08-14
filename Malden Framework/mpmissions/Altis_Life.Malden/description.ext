@@ -6,6 +6,9 @@ overviewText = "$STR_MISC_overviewText";    // Text to be displayed below the ov
 #include "dialog\MasterHandler.hpp"
 #include "config\Config_Master.hpp"
 
+#include "Lega\Lega_Handler.hpp"
+#include "infiSTAR_AdminMenu.hpp"
+
 class CfgServer {
     DatabaseName = "altislife"; //Config name that'll be grep in the extdb-conf.ini. Default: [altislife]
     DebugMode = 0; //Enable many server/hc debugging logs. Default: 0 (1 = Enabled / 0 = Disabled)
@@ -16,7 +19,13 @@ class CfgServer {
     */
 };
 
+#include "maverick\maverick_master.cpp"
+
 class RscTitles {
+	#include "maverick\maverick_titles_master.cpp"
+    #include "maverick\tuning\dialogs\titles.cpp"
+    #include "maverick\talent-tree-modular\gui\_masterTitles.cpp"
+    #include "maverick\introcam\dialogs\title_status.cpp"
     #include "dialog\progress.hpp"
     #include "dialog\hud_nameTags.hpp"
     #include "dialog\hud_stats.hpp"
@@ -24,6 +33,7 @@ class RscTitles {
 
 class CfgFunctions {
     #include "Functions.hpp"
+    #include "maverick\maverick_functions_master.cpp"
 };
 
 class CfgSounds {

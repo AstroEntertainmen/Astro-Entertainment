@@ -13,15 +13,15 @@ _robber = [_this,1,ObjNull,[ObjNull]] call BIS_fnc_param; //Can you guess? Alrig
 _action = [_this,2] call BIS_fnc_param;//Action name
 _cops = (west countSide playableUnits);
 _vault = param [0,ObjNull,[ObjNull]];
-if(typeOf _vault == "Land_CargoBox_V1_F" && time - (bank_bank getVariable ["reset",time]) < 3200) exitWith {hint "The bank was recently robbed!";};
-if(_cops < 5) exitWith {["You cannot rob bank, 5 or more police need to be on",false,"slow"] call life_fnc_notificationSystem;};
-if(side _robber isEqualTo west) exitWith { ["What do you think you are doing?",false,"slow"] call life_fnc_notificationSystem; };
-if(side _robber isEqualTo independent) exitWith { ["What do you think you are doing?",false,"slow"] call life_fnc_notificationSystem; };
-if(_robber distance _shop > 25) exitWith { ["You need to be within 25 meters to rob this shop!",false,"slow"] call life_fnc_notificationSystem; };
+if (typeOf _vault == "Land_CargoBox_V1_F" && time - (bank_bank getVariable ["reset",time]) < 1800) exitWith {hint "The bank was recently robbed!";};
+if (_cops < 5) exitWith {["You cannot rob bank, 5 or more police need to be on",false,"slow"] call life_fnc_notificationSystem;};
+if (side _robber isEqualTo west) exitWith { ["What do you think you are doing?",false,"slow"] call life_fnc_notificationSystem; };
+if (side _robber isEqualTo independent) exitWith { ["What do you think you are doing?",false,"slow"] call life_fnc_notificationSystem; };
+if (_robber distance _shop > 25) exitWith { ["You need to be within 25 meters to rob this shop!",false,"slow"] call life_fnc_notificationSystem; };
 if (vehicle player != _robber) exitWith { ["Get out of your car!",false,"slow"] call life_fnc_notificationSystem; };
 if !(alive _robber) exitWith {};
 
-if(!([false,"codeCracker",1] call life_fnc_handleInv)) exitWith { ["You dont have a code Cracker",false,"slow"] call life_fnc_notificationSystem; };
+if (!([false,"blastingcharge",1] call life_fnc_handleInv)) exitWith { ["You dont have a blasting charge",false,"slow"] call life_fnc_notificationSystem; };
 
 //Caculate Money To Give
 _copMoney = 2000000;
@@ -30,7 +30,7 @@ _copMoney = 2000000;
 //if (_copMoney < 75000) then {_copMoney = 75000;};
 _kassa = _copmoney + round(random 50000);
 
-life_inv_codeCracker = life_inv_codeCracker - 1;
+life_inv_blastingcharge = life_inv_blastingcharge - 1;
 
 [1,format["ALARM! - %1 Robbery in progress", _shop]] remoteExec ["life_fnc_broadcast",west];
 remoteExec ['life_fnc_AAN_Bank2',-2];
@@ -39,7 +39,7 @@ disableSerialization;
 _ui = uiNameSpace getVariable "life_progress";
 _progress = _ui displayCtrl 38201;
 _pgText = _ui displayCtrl 38202;
-_pgText ctrlSetText format["Robbing, empty your inventory for gold bars, stay within 25 meters (1%1)...","%"];
+_pgText ctrlSetText format["Robbing, stay within 25 meters (1%1)...","%"];
 _progress progressSetPosition 0.01;
 _cP = 0.01;
 bank_bank setVariable["reset",time,true];
@@ -47,23 +47,23 @@ bank_bank setVariable["reset",time,true];
 
 while{true} do
 {
-	uiSleep 7;
-	_cP = _cP + (0.01 * (missionNamespace getVariable ["mav_ttm_var_robbingMultiplier", 1]));
-	_progress progressSetPosition _cP;
-	_pgText ctrlSetText format["Robbing, empty your inventory for gold bars, stay within 25 meters (%1%2)...",round(_cP * 100),"%"];
+    uiSleep 7;
+    _cP = _cP + (0.01 * (missionNamespace getVariable ["mav_ttm_var_robbingMultiplier", 1]));
+    _progress progressSetPosition _cP;
+    _pgText ctrlSetText format["Robbing, stay within 25 meters (%1%2)...",round(_cP * 100),"%"];
 
-	if(_cP >= 1 OR !alive _robber) exitWith {};
-	if(_robber distance _shop > 25) exitWith {};
-	if((_robber getVariable["restrained",false])) exitWith {};
-	if(life_istazed) exitWith {} ;
-	if(life_interrupted) exitWith {};
+    if (_cP >= 1 OR !alive _robber) exitWith {};
+    if (_robber distance _shop > 25) exitWith {};
+    if ((_robber getVariable["restrained",false])) exitWith {};
+    if (life_istazed) exitWith {} ;
+    if (life_interrupted) exitWith {};
 };
 
 
-	if!(alive _robber) exitWith {  life_rip = false; call life_fnc_hudUpdate; };
-	if(_robber distance _shop > 25) exitWith {  ["You are too far away, robbery failed!",false,"slow"] call life_fnc_notificationSystem; 5 cutText ["","PLAIN"]; life_rip = false; call life_fnc_hudUpdate;};
-	if(_robber getVariable "restrained") exitWith { life_rip = false; ["You have been arrested!",false,"slow"] call life_fnc_notificationSystem; 5 cutText ["","PLAIN"]; call life_fnc_hudUpdate;};
-	if(life_istazed) exitWith {  life_rip = false; ["You have been downed!",false,"slow"] call life_fnc_notificationSystem; 5 cutText ["","PLAIN"]; call life_fnc_hudUpdate;};
+    if!(alive _robber) exitWith {  life_rip = false; call life_fnc_hudUpdate; };
+    if (_robber distance _shop > 25) exitWith {  ["You are too far away, robbery failed!",false,"slow"] call life_fnc_notificationSystem; 5 cutText ["","PLAIN"]; life_rip = false; call life_fnc_hudUpdate;};
+    if (_robber getVariable "restrained") exitWith { life_rip = false; ["You have been arrested!",false,"slow"] call life_fnc_notificationSystem; 5 cutText ["","PLAIN"]; call life_fnc_hudUpdate;};
+    if (life_istazed) exitWith {  life_rip = false; ["You have been downed!",false,"slow"] call life_fnc_notificationSystem; 5 cutText ["","PLAIN"]; call life_fnc_hudUpdate;};
 
 5 cutText ["","PLAIN"];
 titleText[format["You have stolen $%1, Run!!",[_kassa] call life_fnc_numberText],"PLAIN"];

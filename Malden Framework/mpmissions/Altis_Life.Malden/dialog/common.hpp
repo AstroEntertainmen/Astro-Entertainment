@@ -9,7 +9,6 @@
 
 class Life_Checkbox
 {
-    access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
     idc = -1; // Control identification (without it, the control won't be displayed)
     type = 77; // Type
     style = ST_LEFT + ST_MULTI; // Style
@@ -737,7 +736,6 @@ class Life_RscHitZones {
 
 class Life_RscMapControl
 {
-    access = 0;
     type = 101;
     idc = 51;
     style = 48;

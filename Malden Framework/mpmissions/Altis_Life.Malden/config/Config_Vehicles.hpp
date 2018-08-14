@@ -192,6 +192,13 @@ class LifeCfgVehicles {
     };
 
     // Apex DLC
+    class O_T_Truck_03_ammo_ghex_F {
+        vItemSpace = 150;
+        conditions = "";
+        price = 25000;
+        textures[] = {};
+    };
+
     class C_Boat_Transport_02_F {
         vItemSpace = 100;
         conditions = "license_civ_boat || {!(playerSide isEqualTo civilian)}";
@@ -701,8 +708,11 @@ will modify the virtual space and the price of the vehicle, but other informatio
             { "Orange", "civ", {
                 "\a3\soft_f_gamma\SUV_01\Data\suv_01_ext_04_co.paa"
             }, "" },
-            { "Police", "cop", {
-                "\a3\soft_f_gamma\SUV_01\Data\suv_01_ext_02_co.paa"
+            { "Police White", "cop", {
+                "texture\police\Norwegian_suv.jpg"
+            }, "" },
+            { "Police Black", "cop", {
+                "texture\police\Norwegian_suv_black.jpg"
             }, "" }
         };
     };

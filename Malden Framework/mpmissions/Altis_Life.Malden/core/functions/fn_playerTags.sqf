@@ -28,7 +28,7 @@ _masks = LIFE_SETTINGS(getArray,"clothing_masks");
 
 private _index = -1;
 {
-    private "_text";
+    private ["_text"];
     _idc = _ui displayCtrl (iconID + _forEachIndex);
     if (!(lineIntersects [eyePos player, eyePos _x, player, _x]) && alive _x && {!isNil {_x getVariable "realname"}}) then {
         _pos = switch (typeOf _x) do {
@@ -38,48 +38,114 @@ private _index = -1;
         };
         _sPos = worldToScreen _pos;
         _distance = _pos distance player;
-        if (!((headgear _x) in _masks || (goggles _x) in _masks || (uniform _x) in _masks)) then {
-            if (count _sPos > 1 && {_distance < 15}) then {
-                _text = switch (true) do {
-                    case (_x in (units group player) && playerSide isEqualTo civilian): {format ["<t color='#00FF00'>%1</t>",(_x getVariable ["realname",name _x])];};
-                    case (side _x isEqualTo west && {!isNil {_x getVariable "rank"}}): {format ["<img image='%1' size='1'></img> %2",switch ((_x getVariable "rank")) do {
-                        case 2: {"\a3\ui_f\data\gui\cfg\Ranks\corporal_gs.paa"};
-                        case 3: {"\a3\ui_f\data\gui\cfg\Ranks\sergeant_gs.paa"};
-                        case 4: {"\a3\ui_f\data\gui\cfg\Ranks\lieutenant_gs.paa"};
-                        case 5: {"\a3\ui_f\data\gui\cfg\Ranks\captain_gs.paa"};
-                        case 6: {"\a3\ui_f\data\gui\cfg\Ranks\major_gs.paa"};
-                        case 7: {"\a3\ui_f\data\gui\cfg\Ranks\colonel_gs.paa"};
-                        case 8: {"\a3\ui_f\data\gui\cfg\Ranks\general_gs.paa"};
-                        default {"\a3\ui_f\data\gui\cfg\Ranks\private_gs.paa"};
-                        },_x getVariable ["realname",name _x]]};
-                    case (side _x isEqualTo independent): {format ["<t color='#FF0000'><img image='a3\ui_f\data\map\MapControl\hospital_ca.paa' size='1.5'></img></t> %1",_x getVariable ["realname",name _x]]};
-                    default {
-                        if (!isNil {(group _x) getVariable "gang_name"}) then {
-                            format ["%1<br/><t size='0.8' color='#B6B6B6'>%2</t>",_x getVariable ["realname",name _x],(group _x) getVariable ["gang_name",""]];
-                        } else {
-                            if (alive _x) then {
-                                _x getVariable ["realname",name _x];
-                            } else {
-                                if (!isPlayer _x) then {
-                                    _x getVariable ["realname","ERROR"];
-                                };
-                            };
-                        };
-                    };
-                };
 
+        if ((headgear _x) in _masks || (goggles _x) in _masks || (uniform _x) in _masks) then {
+            if (count _sPos > 1 && {_distance < 15}) then {
+                _text = format ["<t size='1' color='#a3a3a3'>MASKED</t><br/><t size='0.9' color='#666666'>%1</t>",getPlayerUID _x];
+                if (_x getVariable ["speaking",false]) then {_text = "<t color='#e6e6e6'>[Speaking] " + _text;};
                 _idc ctrlSetStructuredText parseText _text;
                 _idc ctrlSetPosition [_sPos select 0, _sPos select 1, 0.4, 0.65];
                 _idc ctrlSetScale scale;
                 _idc ctrlSetFade 0;
                 _idc ctrlCommit 0;
                 _idc ctrlShow true;
-            } else {
-                _idc ctrlShow false;
             };
         } else {
-            _idc ctrlShow false;
+            if (count _sPos > 1 && {_distance < 15}) then {
+                _text = format ["<t size='1' color='#a3a3a3'>%1</t><br/><t size='0.9' color='#666666'>%2</t>",_x getVariable ["realname",name _x],getPlayerUID _x];
+                if (_x getVariable ["speaking",false]) then {_text = "<t color='#e6e6e6'>[Speaking] " + _text;};
+                _idc ctrlSetStructuredText parseText _text;
+                _idc ctrlSetPosition [_sPos select 0, _sPos select 1, 0.4, 0.65];
+                _idc ctrlSetScale scale;
+                _idc ctrlSetFade 0;
+                _idc ctrlCommit 0;
+                _idc ctrlShow true;
+            };
         };
+     if (call life_adminlevel >= 1) then {
+if (count _sPos > 1 && {_distance < 15}) then {
+                _text = format ["<t size='1' color='#006400'>%1</t><br/><t size='0.9' color='#666666'>%2</t>",_x getVariable ["realname",name _x],getPlayerUID _x];
+                if (_x getVariable ["speaking",false]) then {_text = "<t color='#e6e6e6'>[Speaking] " + _text;};
+                _idc ctrlSetStructuredText parseText _text;
+                _idc ctrlSetPosition [_sPos select 0, _sPos select 1, 0.4, 0.65];
+                _idc ctrlSetScale scale;
+                _idc ctrlSetFade 0;
+                _idc ctrlCommit 0;
+                _idc ctrlShow true;    // Green
+            };
+        };
+    if (call life_adminlevel >= 2) then {
+if (count _sPos > 1 && {_distance < 15}) then {
+                _text = format ["<t size='1' color='#0000ff'>%1</t><br/><t size='0.9' color='#666666'>%2</t>",_x getVariable ["realname",name _x],getPlayerUID _x];
+                if (_x getVariable ["speaking",false]) then {_text = "<t color='#e6e6e6'>[Speaking] " + _text;};
+                _idc ctrlSetStructuredText parseText _text;
+                _idc ctrlSetPosition [_sPos select 0, _sPos select 1, 0.4, 0.65];
+                _idc ctrlSetScale scale;
+                _idc ctrlSetFade 0;
+                _idc ctrlCommit 0;
+                _idc ctrlShow true;  // Blue
+            };
+        };
+    if (call life_adminlevel >= 3) then{
+if (count _sPos > 1 && {_distance < 15}) then {
+                _text = format ["<t size='1' color='#a020f0'>%1</t><br/><t size='0.9' color='#666666'>%2</t>",_x getVariable ["realname",name _x],getPlayerUID _x];
+                if (_x getVariable ["speaking",false]) then {_text = "<t color='#e6e6e6'>[Speaking] " + _text;};
+                _idc ctrlSetStructuredText parseText _text;
+                _idc ctrlSetPosition [_sPos select 0, _sPos select 1, 0.4, 0.65];
+                _idc ctrlSetScale scale;
+                _idc ctrlSetFade 0;
+                _idc ctrlCommit 0;
+                _idc ctrlShow true; // Purple
+            };
+        };
+    if (call life_adminlevel >= 4) then {
+if (count _sPos > 1 && {_distance < 15}) then {
+                _text = format ["<t size='1' color='#ff0000'>%1</t><br/><t size='0.9' color='#666666'>%2</t>",_x getVariable ["realname",name _x],getPlayerUID _x];
+                if (_x getVariable ["speaking",false]) then {_text = "<t color='#e6e6e6'>[Speaking] " + _text;};
+                _idc ctrlSetStructuredText parseText _text;
+                _idc ctrlSetPosition [_sPos select 0, _sPos select 1, 0.4, 0.65];
+                _idc ctrlSetScale scale;
+                _idc ctrlSetFade 0;
+                _idc ctrlCommit 0;
+                _idc ctrlShow true;  //Red
+            };
+        };
+ if (call life_donorlevel >= 1) then {
+if (count _sPos > 1 && {_distance < 15}) then {
+                _text = format ["<t size='1' color='#ff1493'>%1</t><br/><t size='0.9' color='#666666'>%2</t>",_x getVariable ["realname",name _x],getPlayerUID _x];
+                if (_x getVariable ["speaking",false]) then {_text = "<t color='#e6e6e6'>[Speaking] " + _text;};
+                _idc ctrlSetStructuredText parseText _text;
+                _idc ctrlSetPosition [_sPos select 0, _sPos select 1, 0.4, 0.65];
+                _idc ctrlSetScale scale;
+                _idc ctrlSetFade 0;
+                _idc ctrlCommit 0;
+                _idc ctrlShow true;    //Donator 1
+        };
+    };
+ if (call life_donorlevel >= 2) then {
+if (count _sPos > 1 && {_distance < 15}) then {
+                _text = format ["<t size='1' color='#ff8c00'>%1</t><br/><t size='0.9' color='#666666'>%2</t>",_x getVariable ["realname",name _x],getPlayerUID _x];
+                if (_x getVariable ["speaking",false]) then {_text = "<t color='#e6e6e6'>[Speaking] " + _text;};
+                _idc ctrlSetStructuredText parseText _text;
+                _idc ctrlSetPosition [_sPos select 0, _sPos select 1, 0.4, 0.65];
+                _idc ctrlSetScale scale;
+                _idc ctrlSetFade 0;
+                _idc ctrlCommit 0;
+                _idc ctrlShow true;    //Donator 2
+        };
+    };
+ if (call life_donorlevel >= 3) then {
+if (count _sPos > 1 && {_distance < 15}) then {
+                _text = format ["<t size='1' color='#ffd700'>%1</t><br/><t size='0.9' color='#666666'>%2</t>",_x getVariable ["realname",name _x],getPlayerUID _x];
+                if (_x getVariable ["speaking",false]) then {_text = "<t color='#e6e6e6'>[Speaking] " + _text;};
+                _idc ctrlSetStructuredText parseText _text;
+                _idc ctrlSetPosition [_sPos select 0, _sPos select 1, 0.4, 0.65];
+                _idc ctrlSetScale scale;
+                _idc ctrlSetFade 0;
+                _idc ctrlCommit 0;
+                _idc ctrlShow true;  //Donator 3
+        };
+    };
     } else {
         _idc ctrlShow false;
     };
